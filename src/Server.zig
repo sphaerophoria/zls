@@ -886,7 +886,7 @@ pub fn updateConfiguration(server: *Server, new_config: configuration.Configurat
         if (!std.process.can_spawn) break :blk;
 
         for (server.document_store.build_files.keys()) |build_file_uri| {
-            try server.document_store.invalidateBuildFile(build_file_uri);
+            server.document_store.invalidateBuildFile(build_file_uri);
         }
     }
 
@@ -1269,7 +1269,7 @@ fn saveDocumentHandler(server: *Server, arena: std.mem.Allocator, notification: 
     const uri = notification.textDocument.uri;
 
     if (std.process.can_spawn and DocumentStore.isBuildFile(uri)) {
-        try server.document_store.invalidateBuildFile(uri);
+        server.document_store.invalidateBuildFile(uri);
     }
 
     if (std.process.can_spawn and server.config.enable_build_on_save) {
